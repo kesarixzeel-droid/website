@@ -10,7 +10,7 @@ const NAV = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
   { name: 'Products', href: '/#products' },
-  { name: 'Industries', href: '/#industries' },
+  { name: 'Industries', href: '/industries' },
   { name: 'Game', href: '/#game' },
   { name: 'About', href: '/#about' },
   { name: 'Contact', href: '/#contact' },

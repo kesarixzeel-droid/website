@@ -79,18 +79,18 @@ const PRODUCTS = [
 ]
 
 const INDUSTRIES = [
-  { icon: Factory, name: 'Manufacturing' },
-  { icon: Stethoscope, name: 'Healthcare' },
-  { icon: GraduationCap, name: 'Education' },
-  { icon: ShoppingBag, name: 'Retail' },
-  { icon: Utensils, name: 'Restaurant' },
-  { icon: HomeIcon, name: 'Real Estate' },
-  { icon: Landmark, name: 'Finance' },
-  { icon: HardHat, name: 'Construction' },
-  { icon: Boxes, name: 'Textile' },
-  { icon: Truck, name: 'Logistics' },
-  { icon: Wrench, name: 'Service Businesses' },
-  { icon: Rocket, name: 'Startups' },
+  { icon: Factory, name: 'Manufacturing', slug: 'manufacturing' },
+  { icon: Stethoscope, name: 'Healthcare', slug: 'healthcare' },
+  { icon: GraduationCap, name: 'Education', slug: 'education' },
+  { icon: ShoppingBag, name: 'Retail', slug: 'retail' },
+  { icon: Utensils, name: 'Restaurant', slug: 'restaurant' },
+  { icon: HomeIcon, name: 'Real Estate', slug: 'real-estate' },
+  { icon: Landmark, name: 'Finance', slug: 'finance' },
+  { icon: HardHat, name: 'Construction', slug: 'construction' },
+  { icon: Boxes, name: 'Textile', slug: 'textile' },
+  { icon: Truck, name: 'Logistics', slug: 'logistics' },
+  { icon: Wrench, name: 'Service Businesses', slug: 'service-businesses' },
+  { icon: Rocket, name: 'Startups', slug: 'startups' },
 ]
 
 const LOGOS = ['NovaCorp','Zentek','Brightline','Vertex','Lumino','Kinetix','Arcadia','Hyperion','Solstice','Northwind','Meridian','Quantica']
@@ -135,7 +135,7 @@ function App() {
           </a>
           <nav className="hidden lg:flex items-center gap-1">
             {NAV.map(n => (
-              <a key={n} href={n === 'Services' ? '/services' : `#${n.toLowerCase()}`} className="text-sm font-medium text-neutral-700 hover:text-brand-600 px-3 py-2 rounded-lg hover:bg-brand-50 transition">{n}</a>
+              <a key={n} href={n === 'Services' ? '/services' : n === 'Industries' ? '/industries' : `#${n.toLowerCase()}`} className="text-sm font-medium text-neutral-700 hover:text-brand-600 px-3 py-2 rounded-lg hover:bg-brand-50 transition">{n}</a>
             ))}
           </nav>
           <div className="flex items-center gap-2">
@@ -145,7 +145,7 @@ function App() {
         </div>
         {menuOpen && (
           <div className="lg:hidden container max-w-7xl mx-auto mt-2 rounded-2xl glass shadow-soft p-3">
-            {NAV.map(n => <a key={n} onClick={() => setMenuOpen(false)} href={n === 'Services' ? '/services' : `#${n.toLowerCase()}`} className="block px-3 py-2 rounded-lg hover:bg-brand-50 text-sm font-medium">{n}</a>)}
+            {NAV.map(n => <a key={n} onClick={() => setMenuOpen(false)} href={n === 'Services' ? '/services' : n === 'Industries' ? '/industries' : `#${n.toLowerCase()}`} className="block px-3 py-2 rounded-lg hover:bg-brand-50 text-sm font-medium">{n}</a>)}
           </div>
         )}
       </header>
@@ -374,11 +374,13 @@ function App() {
           <SectionHeading eyebrow="Industries" title="Built for every kind of business" subtitle="From factories to hospitals, classrooms to construction sites." />
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-12">
             {INDUSTRIES.map((ind, i) => (
-              <motion.div key={ind.name} initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}
-                className="rounded-2xl bg-white border border-neutral-100 shadow-soft p-5 flex flex-col items-center text-center card-lift">
-                <div className="h-11 w-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center"><ind.icon className="h-5 w-5" /></div>
-                <div className="font-semibold text-sm mt-3">{ind.name}</div>
-              </motion.div>
+              <Link key={ind.name} href={`/industries/${ind.slug}`}>
+                <motion.div initial={{ opacity: 0, y: 12 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.03 }}
+                  className="rounded-2xl bg-white border border-neutral-100 shadow-soft p-5 flex flex-col items-center text-center card-lift">
+                  <div className="h-11 w-11 rounded-xl bg-brand-100 text-brand-600 flex items-center justify-center"><ind.icon className="h-5 w-5" /></div>
+                  <div className="font-semibold text-sm mt-3">{ind.name}</div>
+                </motion.div>
+              </Link>
             ))}
           </div>
         </div>
