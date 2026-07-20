@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Menu, X as XIcon, ArrowRight } from 'lucide-react'
 import DemoModal from '@/components/DemoModal'
 import OliMascot from '@/components/OliMascot'
@@ -9,12 +10,28 @@ import GameChallenge from '@/components/GameChallenge'
 const NAV = [
   { name: 'Home', href: '/' },
   { name: 'Services', href: '/services' },
-  { name: 'Products', href: '/#products' },
+  { name: 'Products', href: '/products' },
   { name: 'Industries', href: '/industries' },
-  { name: 'Game', href: '/#game' },
-  { name: 'About', href: '/#about' },
-  { name: 'Contact', href: '/#contact' },
+  { name: 'Game', href: '/game' },
+  { name: 'About', href: '/about' },
+  { name: 'Contact', href: '/contact' },
 ]
+
+export function LogoLockup({ compact = false }) {
+  return (
+    <Link href="/" className="flex items-center gap-2.5">
+      <div className="relative h-11 w-11 rounded-2xl overflow-hidden bg-white shadow-soft border border-brand-100">
+        <Image src="/brand/oo-logo.jpg" alt="Olive Orange Technologies" width={44} height={44} priority className="object-cover" />
+      </div>
+      {!compact && (
+        <div className="leading-tight">
+          <div className="font-display font-bold text-[15px] sm:text-base">Olive Orange</div>
+          <div className="text-[10px] uppercase tracking-widest text-neutral-500">Technologies</div>
+        </div>
+      )}
+    </Link>
+  )
+}
 
 export default function HeaderClient() {
   const [menuOpen, setMenuOpen] = useState(false)
@@ -33,17 +50,7 @@ export default function HeaderClient() {
     <>
       <header className="fixed top-3 inset-x-3 sm:inset-x-6 z-50">
         <div className={`container max-w-7xl mx-auto flex items-center justify-between rounded-2xl px-4 sm:px-6 py-3 ${scrolled ? 'glass shadow-soft' : 'bg-white/60 backdrop-blur border border-white/60'}`}>
-          <Link href="/" className="flex items-center gap-2">
-            <div className="relative h-9 w-9 rounded-xl bg-gradient-to-br from-brand-500 to-brand-600 shadow-glow flex items-center justify-center">
-              <svg viewBox="0 0 24 24" className="h-5 w-5 text-white" fill="currentColor">
-                <path d="M12 2 C 6 2, 3 7, 3 12 C 3 17, 7 22, 12 22 C 17 22, 21 17, 21 12 C 21 8, 18 5, 15 5 C 13 5, 12 6, 12 8 C 12 10, 14 11, 16 11" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" />
-              </svg>
-            </div>
-            <div className="leading-tight">
-              <div className="font-display font-bold text-[15px] sm:text-base">Olive Orange</div>
-              <div className="text-[10px] uppercase tracking-widest text-neutral-500">Technologies</div>
-            </div>
-          </Link>
+          <LogoLockup />
           <nav className="hidden lg:flex items-center gap-1">
             {NAV.map(n => (
               <Link key={n.name} href={n.href} className="text-sm font-medium text-neutral-700 hover:text-brand-600 px-3 py-2 rounded-lg hover:bg-brand-50 transition">{n.name}</Link>

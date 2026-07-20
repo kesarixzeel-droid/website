@@ -158,6 +158,20 @@ test_plan:
     - "One or two representative service detail pages (ai-solutions, mobile-app-development) render all sections correctly"
   stuck_tasks: []
   test_all: false
+
+  - task: "15 Product detail pages (Oli branding), Products listing, Multi-page split (Home/About/Contact/Game), Logo update, OLI 3D avatar walking mascot"
+    implemented: true
+    working: true
+    file: "app/products/[slug]/page.js, app/products/page.js, app/about/page.js, app/contact/page.js, app/game/page.js, components/ProductDetailClient.jsx, components/AboutClient.jsx, components/ContactClient.jsx, components/GamePageClient.jsx, components/OliMascot.jsx, components/HeaderClient.jsx, lib/products-data.js, public/brand/oo-logo.jpg, public/brand/oli-mascot.jpg"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      -working: true
+       agent: "main"
+       comment: "Major expansion: Replaced SVG mascot with real 3D OLI image (user-provided) that now WALKS across the page every 35s. Updated logo to user-provided Olive Orange lockup. Created 15 Oli product detail pages (Oli CRM/ERP/HRMS/POS/Billing/School ERP/Hospital ERP/Manufacturing ERP/Inventory/Project Mgmt/Service Desk/Visitor Mgmt/Restaurant POS/AI Assistant/Real Estate CRM) with software dashboard screenshots (Unsplash/Pexels), features grid, industries, MRP+offer pricing, free trial CTAs. Simplified home page to a hero + 6 gateway cards; moved detailed sections to dedicated pages: /about (story, mission, vision, values, process, timeline, team, achievements, why choose), /contact (channels grid, form, Google map, socials), /game (dedicated game challenge landing). All 15 product routes return HTTP 200. New tagline 'Every problem has a solution.' applied across footer/hero/CTA."
+
+
   test_priority: "high_first"
 
 agent_communication:
