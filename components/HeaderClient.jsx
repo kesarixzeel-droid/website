@@ -12,6 +12,7 @@ const NAV = [
   { name: 'Services', href: '/services' },
   { name: 'Products', href: '/products' },
   { name: 'Industries', href: '/industries' },
+  { name: 'Blog', href: '/blog' },
   { name: 'Game', href: '/game' },
   { name: 'About', href: '/about' },
   { name: 'Contact', href: '/contact' },

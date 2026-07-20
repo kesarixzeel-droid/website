@@ -46,6 +46,7 @@ export default function FooterCTA() {
                 <li><Link href="/services" className="hover:text-brand-400">Services</Link></li>
                 <li><Link href="/products" className="hover:text-brand-400">Products</Link></li>
                 <li><Link href="/industries" className="hover:text-brand-400">Industries</Link></li>
+                <li><Link href="/blog" className="hover:text-brand-400">Blog</Link></li>
                 <li><Link href="/game" className="hover:text-brand-400">Game Challenge</Link></li>
               </ul>
             </div>

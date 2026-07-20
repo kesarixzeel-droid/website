@@ -34,8 +34,8 @@ const QUICK_LINKS = [
   { name: 'Services', href: '/services', desc: '12 service categories', icon: Sparkles },
   { name: 'Products', href: '/products', desc: '15 Oli software apps', icon: Boxes },
   { name: 'Industries', href: '/industries', desc: '12 verticals we serve', icon: LayoutDashboard },
+  { name: 'Blog', href: '/blog', desc: '12 playbooks & case studies', icon: Rocket },
   { name: 'Game Challenge', href: '/game', desc: 'How healthy is your business?', icon: Gamepad2 },
-  { name: 'About Us', href: '/about', desc: 'Our story and mission', icon: Rocket },
   { name: 'Contact', href: '/contact', desc: 'Talk to a human', icon: MessageSquare },
 ]
 

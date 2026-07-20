@@ -1,5 +1,6 @@
 import { notFound } from 'next/navigation'
 import { SERVICE_CATEGORIES, getCategoryBySlug } from '@/lib/services-data'
+import { getServiceExtras } from '@/lib/service-extras'
 import ServiceDetailClient from '@/components/ServiceDetailClient'
 
 export function generateStaticParams() {
@@ -21,5 +22,6 @@ export default async function ServiceDetailPage({ params }) {
   const cat = getCategoryBySlug(slug)
   if (!cat) notFound()
   const related = (cat.related || []).map(s => getCategoryBySlug(s)).filter(Boolean).map(r => ({ slug: r.slug, name: r.name, icon: r.icon, tagline: r.tagline }))
-  return <ServiceDetailClient category={cat} related={related} />
+  const extras = getServiceExtras(slug)
+  return <ServiceDetailClient category={cat} related={related} extras={extras} />
 }

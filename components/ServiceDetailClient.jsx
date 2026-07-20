@@ -1,8 +1,9 @@
 'use client'
 import { useState } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { motion } from 'framer-motion'
-import { Bot, Globe2, Smartphone, Wrench, Palette, Briefcase, TrendingUp, Cloud, Zap, Boxes, LayoutDashboard, BarChart3, ArrowRight, CheckCircle2, Sparkles, MessageSquare, ChevronDown, ChevronRight, PlayCircle, ShieldCheck, Rocket } from 'lucide-react'
+import { Bot, Globe2, Smartphone, Wrench, Palette, Briefcase, TrendingUp, Cloud, Zap, Boxes, LayoutDashboard, BarChart3, ArrowRight, CheckCircle2, Sparkles, MessageSquare, ChevronDown, ChevronRight, PlayCircle, ShieldCheck, Rocket, Quote, ExternalLink } from 'lucide-react'
 import HeaderClient from '@/components/HeaderClient'
 import FooterCTA from '@/components/FooterCTA'
 import DemoModal from '@/components/DemoModal'
@@ -14,7 +15,7 @@ function inr(n) {
   return '₹ ' + n.toLocaleString('en-IN')
 }
 
-export default function ServiceDetailClient({ category, related }) {
+export default function ServiceDetailClient({ category, related, extras }) {
   const [demoOpen, setDemoOpen] = useState(false)
   const [openFaq, setOpenFaq] = useState(0)
   const Icon = ICON_MAP[category.icon] || Sparkles
@@ -260,6 +261,107 @@ export default function ServiceDetailClient({ category, related }) {
           </div>
         </div>
       </section>
+
+      {/* DEMOS */}
+      {extras && extras.demos && extras.demos.length > 0 && (
+        <section className="py-20">
+          <div className="container max-w-7xl mx-auto">
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-brand-100 text-brand-700 font-semibold uppercase tracking-widest">Live Demos</div>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3">See {category.name} in action</h2>
+              <p className="text-neutral-600 mt-3">Real examples from our production deployments.</p>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5 mt-10">
+              {extras.demos.map((d, i) => (
+                <motion.div key={d.title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.05 }}
+                  className="group rounded-3xl bg-white border border-neutral-100 shadow-soft overflow-hidden card-lift">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <Image src={d.image + '?w=600&auto=format&fit=crop&q=70'} alt={d.title} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw" className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-neutral-900/50 to-transparent opacity-0 group-hover:opacity-100 transition" />
+                    <button onClick={() => setDemoOpen(true)} className="absolute bottom-3 left-3 right-3 opacity-0 group-hover:opacity-100 transition inline-flex items-center justify-center gap-1.5 px-3 py-2 rounded-full bg-white/95 backdrop-blur text-brand-700 text-xs font-semibold">
+                      <PlayCircle className="h-4 w-4" /> Request Demo
+                    </button>
+                  </div>
+                  <div className="p-5">
+                    <div className="font-display font-semibold">{d.title}</div>
+                    <p className="text-neutral-500 text-sm mt-1 line-clamp-2">{d.desc}</p>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+            <div className="text-center mt-8">
+              <button onClick={() => setDemoOpen(true)} className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 shadow-glow transition">
+                Book a Personal Demo <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* CASE STUDY */}
+      {extras && extras.caseStudy && (
+        <section className="py-20 bg-gradient-to-b from-brand-50/40 to-white">
+          <div className="container max-w-6xl mx-auto">
+            <div className="max-w-2xl mx-auto text-center">
+              <div className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-brand-100 text-brand-700 font-semibold uppercase tracking-widest">Case Study</div>
+              <h2 className="font-display text-3xl sm:text-4xl font-bold mt-3">Real client. Real numbers.</h2>
+            </div>
+            <div className="mt-10 grid lg:grid-cols-5 gap-8">
+              {/* Left: story */}
+              <div className="lg:col-span-3 rounded-3xl bg-white border border-neutral-100 shadow-soft p-8 sm:p-10 relative">
+                <div className="absolute -top-6 left-8 h-14 w-14 rounded-2xl bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center shadow-glow">
+                  <Quote className="h-6 w-6" />
+                </div>
+                <div className="text-xs uppercase tracking-widest text-brand-600 font-semibold">{extras.caseStudy.industry}</div>
+                <div className="font-display text-2xl font-bold mt-1">{extras.caseStudy.client}</div>
+                <div className="mt-6 space-y-4">
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-red-600 font-semibold">The Challenge</div>
+                    <p className="text-neutral-700 mt-1 leading-relaxed">{extras.caseStudy.challenge}</p>
+                  </div>
+                  <div>
+                    <div className="text-xs uppercase tracking-widest text-brand-600 font-semibold">Our Solution</div>
+                    <p className="text-neutral-700 mt-1 leading-relaxed">{extras.caseStudy.solution}</p>
+                  </div>
+                </div>
+                <div className="mt-6 pt-6 border-t border-neutral-100">
+                  <p className="font-display text-lg italic text-neutral-800 leading-relaxed">&ldquo;{extras.caseStudy.quote}&rdquo;</p>
+                  <div className="mt-4 flex items-center gap-3">
+                    <div className="h-10 w-10 rounded-full bg-gradient-to-br from-brand-500 to-brand-600 text-white flex items-center justify-center font-bold text-sm">
+                      {extras.caseStudy.client[0]}
+                    </div>
+                    <div className="text-sm">
+                      <div className="font-semibold">{extras.caseStudy.role}</div>
+                      <div className="text-neutral-500 text-xs">{extras.caseStudy.client}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right: results */}
+              <div className="lg:col-span-2 rounded-3xl bg-neutral-900 text-white shadow-soft p-8 relative overflow-hidden">
+                <div className="absolute -top-16 -right-16 h-40 w-40 rounded-full bg-brand-500/30 blob" />
+                <div className="absolute -bottom-16 -left-16 h-40 w-40 rounded-full bg-orange-400/20 blob" style={{ animationDelay: '-3s' }} />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-1.5 text-xs px-3 py-1 rounded-full bg-brand-500/20 text-brand-300 font-semibold uppercase tracking-widest">Results</div>
+                  <h3 className="font-display text-2xl font-bold mt-3">The numbers</h3>
+                  <div className="grid grid-cols-2 gap-3 mt-6">
+                    {extras.caseStudy.results.map(m => (
+                      <div key={m.l} className="rounded-2xl bg-white/10 border border-white/10 p-4">
+                        <div className="font-display text-3xl font-bold text-brand-400">{m.v}</div>
+                        <div className="text-xs text-neutral-300 mt-1 leading-tight">{m.l}</div>
+                      </div>
+                    ))}
+                  </div>
+                  <button onClick={() => setDemoOpen(true)} className="mt-6 w-full inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 shadow-glow transition">
+                    Get similar results <ArrowRight className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* RELATED */}
       {related && related.length > 0 && (
