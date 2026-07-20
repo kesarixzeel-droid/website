@@ -6,11 +6,13 @@ import {
   Users, Building2, Briefcase, GraduationCap, Stethoscope, Utensils, Home as HomeIcon,
   Truck, ShoppingBag, Factory, Landmark, HardHat, MessageSquare, TrendingUp, Gamepad2,
   Menu, X as XIcon, ChevronRight, Bot, Boxes, Receipt, Warehouse, ClipboardList,
-  LayoutDashboard, Smartphone, Globe2, Wrench,
+  LayoutDashboard, Smartphone, Globe2, Wrench, Palette, Cloud, BarChart3,
 } from 'lucide-react'
+import Link from 'next/link'
 import OliMascot from '@/components/OliMascot'
 import GameChallenge from '@/components/GameChallenge'
 import DemoModal from '@/components/DemoModal'
+import { SERVICE_CATEGORIES } from '@/lib/services-data'
 
 /* ------------ small helpers ------------ */
 function Counter({ to = 100, suffix = '', duration = 1.6 }) {
@@ -50,20 +52,13 @@ function SectionHeading({ eyebrow, title, subtitle, center = true }) {
 /* ------------ data ------------ */
 const NAV = ['Home', 'Services', 'Products', 'Industries', 'Game', 'About', 'Blog', 'Contact']
 
-const SERVICES = [
-  { icon: Users, name: 'CRM Software', desc: 'Turn every lead into a customer with intelligent pipelines.' },
-  { icon: Boxes, name: 'ERP Software', desc: 'One platform to run finance, ops, purchase and sales.' },
-  { icon: Briefcase, name: 'HRMS', desc: 'Attendance, payroll and performance — all automated.' },
-  { icon: Receipt, name: 'Billing Software', desc: 'GST-ready invoices in seconds. Zero manual work.' },
-  { icon: Warehouse, name: 'Inventory Management', desc: 'Real-time stock across warehouses, branches, POS.' },
-  { icon: GraduationCap, name: 'School Management', desc: 'Fees, attendance, exams and parent app in one place.' },
-  { icon: Stethoscope, name: 'Hospital Management', desc: 'OPD, IPD, pharmacy, billing — end-to-end.' },
-  { icon: Utensils, name: 'Restaurant POS', desc: 'Fast billing, KOT, delivery integrations and dashboards.' },
-  { icon: HomeIcon, name: 'Real Estate CRM', desc: 'Site visits, bookings, EMI tracking, broker network.' },
-  { icon: Bot, name: 'AI Chatbots', desc: 'Convert website visitors into leads 24×7.' },
-  { icon: Globe2, name: 'Website Development', desc: 'Blazing-fast, SEO-first websites that convert.' },
-  { icon: Smartphone, name: 'Mobile App Development', desc: 'iOS & Android apps built with modern stacks.' },
-]
+const _ICON_MAP = { Bot, Globe2, Smartphone, Wrench, Palette, Briefcase, TrendingUp, Cloud, Zap, Boxes, LayoutDashboard, BarChart3 }
+const SERVICES = SERVICE_CATEGORIES.map(c => ({
+  icon: _ICON_MAP[c.icon] || Sparkles,
+  name: c.name,
+  desc: c.tagline,
+  slug: c.slug,
+}))
 
 const PRODUCTS = [
   { name: 'Olive CRM', tag: 'Sales', desc: 'Close deals 3× faster with pipeline AI.' },
@@ -140,7 +135,7 @@ function App() {
           </a>
           <nav className="hidden lg:flex items-center gap-1">
             {NAV.map(n => (
-              <a key={n} href={`#${n.toLowerCase()}`} className="text-sm font-medium text-neutral-700 hover:text-brand-600 px-3 py-2 rounded-lg hover:bg-brand-50 transition">{n}</a>
+              <a key={n} href={n === 'Services' ? '/services' : `#${n.toLowerCase()}`} className="text-sm font-medium text-neutral-700 hover:text-brand-600 px-3 py-2 rounded-lg hover:bg-brand-50 transition">{n}</a>
             ))}
           </nav>
           <div className="flex items-center gap-2">
@@ -150,7 +145,7 @@ function App() {
         </div>
         {menuOpen && (
           <div className="lg:hidden container max-w-7xl mx-auto mt-2 rounded-2xl glass shadow-soft p-3">
-            {NAV.map(n => <a key={n} onClick={() => setMenuOpen(false)} href={`#${n.toLowerCase()}`} className="block px-3 py-2 rounded-lg hover:bg-brand-50 text-sm font-medium">{n}</a>)}
+            {NAV.map(n => <a key={n} onClick={() => setMenuOpen(false)} href={n === 'Services' ? '/services' : `#${n.toLowerCase()}`} className="block px-3 py-2 rounded-lg hover:bg-brand-50 text-sm font-medium">{n}</a>)}
           </div>
         )}
       </header>
@@ -191,7 +186,7 @@ function App() {
             <button onClick={() => setDemoOpen(true)} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-brand-500 text-white font-semibold hover:bg-brand-600 shadow-glow transition">
               Book Free Demo <ArrowRight className="h-4 w-4" />
             </button>
-            <a href="#services" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-neutral-900 text-white font-semibold hover:bg-black transition">
+            <a href="/services" className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-neutral-900 text-white font-semibold hover:bg-black transition">
               Explore Services
             </a>
             <button onClick={() => setGameOpen(true)} className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white border border-neutral-200 text-neutral-900 font-semibold hover:border-brand-500 hover:text-brand-600 transition">
@@ -286,7 +281,7 @@ function App() {
                   <div>
                     <div className="font-display font-semibold text-lg">{s.name}</div>
                     <p className="text-neutral-500 text-sm mt-1">{s.desc}</p>
-                    <button onClick={() => setDemoOpen(true)} className="mt-3 inline-flex items-center gap-1 text-brand-600 text-sm font-semibold hover:gap-2 transition-all">Learn more <ChevronRight className="h-4 w-4" /></button>
+                    <Link href={`/services/${s.slug}`} className="mt-3 inline-flex items-center gap-1 text-brand-600 text-sm font-semibold hover:gap-2 transition-all">Learn more <ChevronRight className="h-4 w-4" /></Link>
                   </div>
                 </div>
               </motion.div>
@@ -446,7 +441,7 @@ function App() {
             <div>
               <div className="text-white font-semibold mb-3">Services</div>
               <ul className="space-y-2 text-sm">
-                {SERVICES.slice(0,6).map(s => <li key={s.name}><a href="#services" className="hover:text-brand-400">{s.name}</a></li>)}
+                {SERVICES.slice(0,6).map(s => <li key={s.name}><Link href={`/services/${s.slug}`} className="hover:text-brand-400">{s.name}</Link></li>)}
               </ul>
             </div>
             <div>
