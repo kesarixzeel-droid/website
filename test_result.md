@@ -120,6 +120,9 @@ backend:
       -working: true
        agent: "main"
        comment: "GET /api/health returns ok. POST /api/game/score computes rule-based Business Health score (0-100), verdict, recommendations, and revenue lift; persists in MongoDB game_scores. POST /api/demo and /api/contact insert into leads collection. GET /api/leads returns recent 50. All tested via curl."
+      -working: true
+       agent: "testing"
+       comment: "Verified all backend API endpoints after package.json + next.config.js changes (lodash 4.17.21, removed output: 'standalone', added remotePatterns). All 6 tests PASSED: (1) GET /api/health returns correct structure with ok=true, service='olive-orange-api', timestamp. (2) POST /api/game/score returns health score 0-100, verdict (Strong/Healthy/At Risk/Critical), non-empty recommendations array, and persists to MongoDB game_scores collection. (3) POST /api/demo returns id and persists to leads collection with type=demo_request. (4) POST /api/contact returns id and persists to leads collection with type=contact. (5) GET /api/leads returns recent submissions including demo and contact. (6) GET /api/nonexistent returns 404 with correct error structure. MongoDB persistence verified for all write operations. No issues found - all endpoints working correctly."
 
 frontend:
   - task: "Home page with premium hero, OLI mascot, Game Challenge, WhatsApp, Demo modal"
@@ -177,3 +180,5 @@ test_plan:
 agent_communication:
   -agent: "main"
    message: "Phase 1 (aha moment) + Phase 2A (12 dynamic service pages) complete. Backend APIs tested via curl. Frontend verified via screenshots. Awaiting user direction for next phase (Products, Industries, About, Real LLM for OLI, Dark mode, etc.)."
+  -agent: "testing"
+   message: "Backend API verification complete after package.json + next.config.js changes. All 6 endpoints tested and working correctly: health check, game score calculation with MongoDB persistence, demo requests, contact submissions, leads retrieval, and 404 handling. No regressions found. The recent changes (lodash version fix, removal of output: 'standalone', addition of remotePatterns) did not impact backend functionality. All APIs return correct response structures and data persists properly to MongoDB."
